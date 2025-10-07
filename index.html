@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para ti, Señorita Leonela 🌷</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Parisienne&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --lilac: #c69af8;
+    --lilac-dark: #9b6fd6;
+    --bg: #fdf9ff;
+    --text: #4b336b;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at 30% 20%, var(--lilac) 0%, var(--bg) 80%);
+    font-family: 'Parisienne', cursive;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  h1 {
+    text-align: center;
+    color: var(--lilac-dark);
+    font-size: 3em;
+    text-shadow: 0 3px 8px rgba(155,111,214,0.4);
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    font-size: 1.2em;
+    text-align: center;
+    color: var(--text);
+    margin-bottom: 25px;
+  }
+
+  .bouquet {
+    position: relative;
+    width: 320px;
+    height: 360px;
+    background: url('tulipanes.png') center/cover no-repeat;
+    /* Reemplaza 'tulipanes.png' si deseas usar tu imagen real */
+  }
+
+  .flower {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #d7b6f7 0%, #b58ef3 80%);
+    box-shadow: 0 0 20px rgba(180,130,230,0.6);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+
+  .flower:hover {
+    transform: scale(1.1);
+  }
+
+  .message {
+    position: absolute;
+    background: rgba(255,255,255,0.9);
+    color: var(--text);
+    font-size: 1.1em;
+    border-radius: 12px;
+    padding: 12px 18px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.5s ease;
+    max-width: 240px;
+    text-align: center;
+  }
+
+  .show {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .music {
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  button {
+    background: linear-gradient(90deg, var(--lilac), var(--lilac-dark));
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.5em;
+    box-shadow: 0 5px 15px rgba(155,111,214,0.3);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+  }
+
+  /* Smartphone-friendly */
+  @media (max-width: 600px) {
+    h1 { font-size: 2.2em; }
+    .bouquet { width: 260px; height: 300px; }
+    .message { font-size: 1em; }
+    button { font-size: 1.2em; }
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Señorita Leonela 💜</h1>
+<div class="subtitle">
+  Qué curioso… uno intenta mantenerse cuerdo, pero esta magia suya no se evita, se siente, y termina por quedarse.
+</div>
+
+<div class="bouquet">
+  <div class="flower" style="top:20%; left:25%;" data-msg="Tus ojos guardan la calma de los amaneceres que aún no llegan."></div>
+  <div class="flower" style="top:10%; left:60%;" data-msg="Tu sonrisa tiene la osadía de hacerme creer en la magia."></div>
+  <div class="flower" style="top:45%; left:15%;" data-msg="Tus manos son el refugio donde descansa mi día."></div>
+  <div class="flower" style="top:55%; left:60%;" data-msg="Tu voz... ese susurro que vuelve poesía cada instante."></div>
+  <div class="flower" style="top:35%; left:40%;" data-msg="Y tú, Leonela, la razón por la que el tiempo se detiene cuando te pienso."></div>
+</div>
+
+<div class="music">
+  <button onclick="playMusic()">🎵 Reproducir música</button>
+  <audio id="bg-music" src="valiente.mp3"></audio>
+  <!-- 💡 Coloca aquí el archivo de audio en la misma carpeta del HTML y nómbralo 'valiente.mp3' -->
+</div>
+
+<script>
+  const flowers = document.querySelectorAll('.flower');
+
+  flowers.forEach(flower => {
+    flower.addEventListener('click', e => {
+      // Si ya hay un mensaje visible, lo quitamos
+      document.querySelectorAll('.message').forEach(msg => msg.remove());
+
+      const msgText = flower.getAttribute('data-msg');
+      const msg = document.createElement('div');
+      msg.className = 'message';
+      msg.textContent = msgText;
+
+      // Posición del mensaje cerca de la flor
+      msg.style.top = (flower.offsetTop - 60) + 'px';
+      msg.style.left = (flower.offsetLeft + 60) + 'px';
+
+      flower.parentElement.appendChild(msg);
+      setTimeout(() => msg.classList.add('show'), 100);
+
+      // Desaparecer mensaje después de unos segundos
+      setTimeout(() => {
+        msg.classList.remove('show');
+        setTimeout(() => msg.remove(), 500);
+      }, 5000);
+    });
+  });
+
+  function playMusic() {
+    const music = document.getElementById('bg-music');
+    music.play();
+  }
+</script>
+
+</body>
+</html>
